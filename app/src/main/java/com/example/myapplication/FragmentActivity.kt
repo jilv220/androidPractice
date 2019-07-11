@@ -14,6 +14,26 @@ class FragmentActivity : AppCompatActivity(){
     lateinit var toolbar: androidx.appcompat.app.ActionBar
     lateinit var myViewPager : ViewPager
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragmentmain)
+
+        // init toolbar
+        toolbar = supportActionBar!!
+
+        // pass a listener func to listen the bottomNavigation bar
+        navigation_view.setOnNavigationItemSelectedListener (mOnNavigationItemSelectedListener)
+
+        //add the homepage fragment
+        FragmentTranscationUtil().openFragment(HomeFragment(),R.id.fragment_container,supportFragmentManager)
+
+        // viewpager init
+        myViewPager = fragment_container       // no need to find view by id in kotlin, kotlin handles it for u
+        ViewPagerUtil().init(myViewPager,TabAdapter(supportFragmentManager),TabViewOnPageChangeListener())
+        myViewPager.offscreenPageLimit = 2
+
+    }
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {
         item ->
 
@@ -22,7 +42,7 @@ class FragmentActivity : AppCompatActivity(){
             R.id.navigation_home -> {
                 toolbar.title = "home"
                 myViewPager.currentItem = HOME
-                return@OnNavigationItemSelectedListener true
+                return@OnNavigationItemSelectedListener true  // lambda use annotation to return to the outside function
             }
 
             R.id.navigation_dashboard -> {
@@ -49,7 +69,7 @@ class FragmentActivity : AppCompatActivity(){
         }
     }
 
-    private inner class TabViewOnPageChangeListener :ViewPager.OnPageChangeListener{
+    private inner class TabViewOnPageChangeListener : ViewPager.OnPageChangeListener{  // must implement all three methods
         override fun onPageScrollStateChanged(state: Int) {
 
         }
@@ -69,27 +89,6 @@ class FragmentActivity : AppCompatActivity(){
 
             toolbar.title = TabAdapter(supportFragmentManager).getPageTitle(position)
         }
-
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragmentmain)
-
-        // init toolbar and bottomNavigation
-        toolbar = supportActionBar!!
-
-        // pass a listener func to listen the bottomNavigation bar
-        navigation_view.setOnNavigationItemSelectedListener (mOnNavigationItemSelectedListener)
-
-        //add the homepage fragment
-        FragmentTranscationUtil().openFragment(HomeFragment(),R.id.fragment_container,supportFragmentManager)
-
-        // viewpager init
-        myViewPager = fragment_container
-        ViewPagerUtil().init(myViewPager,TabAdapter(supportFragmentManager),TabViewOnPageChangeListener())
-        myViewPager.offscreenPageLimit = 2
-
     }
 
 }

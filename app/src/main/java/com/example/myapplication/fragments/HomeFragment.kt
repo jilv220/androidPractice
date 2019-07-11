@@ -13,9 +13,6 @@ import com.example.myapplication.event.eventMessage
 import com.example.myapplication.fragmentsViewModel.HomeFragmentViewModel
 import org.greenrobot.eventbus.EventBus
 
-
-var RANDOM_BT_CLICKED = false
-
 class HomeFragment : Fragment(), View.OnClickListener {
 
     var viewModel = HomeFragmentViewModel()
@@ -28,8 +25,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.onClickListener = this
         binding.lifecycleOwner = this
 
-        Log.e("viewModel","Binding succeed")
-
+        Log.i("viewModel","Binding succeed")
 
         return binding.root
     }
@@ -40,7 +36,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
             R.id.bt_generate_random -> {
                 EventBus.getDefault().post(eventMessage("HomeFragment generates a random number"))
-                RANDOM_BT_CLICKED = true
                 viewModel.generateRandomNumber()
             }
 

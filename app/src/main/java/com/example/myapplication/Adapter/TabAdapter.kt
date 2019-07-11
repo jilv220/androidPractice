@@ -12,6 +12,7 @@ const val HOME = 0
 const val DASHBOARD = 1
 const val NOTIFICATION = 2
 const val CALCULATION = 3
+
 const val HOME_TITLE = "home"
 const val DASHBOARD_TITLE = "dashboard"
 const val NOTIFICATION_TITLE = "notification"
@@ -20,10 +21,10 @@ const val CALCULATION_TITLE ="calculation"
 
 class TabAdapter : FragmentPagerAdapter {
 
-    // kotlin weird list construction WTF
-    var fragments : MutableList<Fragment> = ArrayList()
+    var fragments  = mutableListOf<Fragment>()
 
     constructor(fm: FragmentManager):super(fm) {
+
         fragments.add(HomeFragment())
         fragments.add(DashBoardFragment())
         fragments.add(NotificationFragment())
@@ -31,6 +32,7 @@ class TabAdapter : FragmentPagerAdapter {
     }
 
     override fun getItem(position: Int) :Fragment {
+
         when(position) {
             HOME -> {
                 return fragments[HOME]
@@ -51,10 +53,12 @@ class TabAdapter : FragmentPagerAdapter {
     }
 
     override fun getCount():Int {
+
         return fragments.size
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
+
         when(position) {
             HOME -> {
                 return HOME_TITLE
@@ -72,7 +76,6 @@ class TabAdapter : FragmentPagerAdapter {
                 return "Error"  // error
             }
         }
-
 
     }
 
