@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -85,6 +86,9 @@ class NotificationFragment : Fragment(),View.OnClickListener {
 
     fun onImageChoseBtClick() {
 
+        // empty the counter for new image
+        counter = 0
+
         var intent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, PICK_IMAGE)
         requestPermissions(permissions, PERMISSION_REQUEST_CODE)
@@ -98,6 +102,7 @@ class NotificationFragment : Fragment(),View.OnClickListener {
 
         var degree90 : Double = (90 * PI) / 180
         var rotateConfig : Float = (((counter + 1) * degree90) % 360).toFloat()
+        Log.e("rotate config: ", "$rotateConfig")
 
         var targetImage = roateImage(image,rotateConfig)
         Log.e("target Image Size", "${targetImage.width} x ${targetImage.height}")
@@ -115,6 +120,20 @@ class NotificationFragment : Fragment(),View.OnClickListener {
 
     fun onScaleBtClick() {
 
+        image = readImgFromImageView(iv_img)
+
+        var width_config = (0.9 * image.width).toInt()
+        var height_config = (0.9 * image.height).toInt()
+
+        var targetImage = image.scale(width_config,height_config)
+
+        Glide.with(this)
+                .load(targetImage)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round)
+                .into(iv_img)
+
     }
 
     fun readImgFromImageView(view : ImageView) : Bitmap{
@@ -123,14 +142,14 @@ class NotificationFragment : Fragment(),View.OnClickListener {
         view.isDrawingCacheEnabled = true
         var image : Bitmap = view.drawingCache
 
-        Toast.makeText(context,"图片读取完成",Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context,"图片读取完成",Toast.LENGTH_SHORT).show()
 
         return image
     }
 
     //
 
-    fun roateImage (image : Bitmap, degree : Float) : Bitmap {
+    fun roateImage (image : Bitmap, radian : Float) : Bitmap {
 
         var width = image.width
         var height = image.height
@@ -139,8 +158,8 @@ class NotificationFragment : Fragment(),View.OnClickListener {
         var errX : Float = 0f
         var errY : Float = 0f
 
-        var fsin = sin(degree)
-        var fcos = cos(degree)
+        var fsin = sin(radian)
+        var fcos = cos(radian)
 
         var newHeight : Int = ceil(abs(height * fcos) + abs(width * fsin)).toInt()
         var newWidth : Int = ceil(abs(width * fcos) + abs(height * fsin)).toInt()
@@ -171,6 +190,19 @@ class NotificationFragment : Fragment(),View.OnClickListener {
 
     }
 
+    fun scaleByMatrix(bitmap: Bitmap, width: Int, height: Int) : Bitmap{
+
+        var w = bitmap.width
+        var h = bitmap.height
+        var scaleW : Float = (width / w).toFloat()
+        var scaleH : Float  = (height / h).toFloat()
+
+        var matrix : Matrix = Matrix()
+        matrix.postScale(scaleW,scaleH)
+
+        return Bitmap.createBitmap(bitmap,0,0,w, h, matrix,true)
+
+    }
 
 
 }
