@@ -1,5 +1,6 @@
 package com.example.myapplication.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
+import com.example.myapplication.RetrofitActivity
 import com.example.myapplication.databinding.Fragment1Binding
 import com.example.myapplication.event.eventMessage
 import com.example.myapplication.fragmentsViewModel.HomeFragmentViewModel
@@ -23,9 +25,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         binding.viewModel = viewModel
         binding.onClickListener = this
+        binding.onRetrofitClickListener = this
         binding.lifecycleOwner = this
 
-        Log.i("viewModel","Binding succeed")
+        Log.e("viewModel","Binding succeed")
 
         return binding.root
     }
@@ -37,6 +40,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.bt_generate_random -> {
                 EventBus.getDefault().post(eventMessage("HomeFragment generates a random number"))
                 viewModel.generateRandomNumber()
+            }
+
+            R.id.bt_go_to_retrofit_test -> {
+                val intent = Intent()
+                intent.setClass(v.context, RetrofitActivity::class.java)
+                startActivity(intent)
             }
 
         }

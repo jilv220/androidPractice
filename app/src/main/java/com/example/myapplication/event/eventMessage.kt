@@ -1,10 +1,5 @@
 package com.example.myapplication.event
 
-class eventMessage {
-    lateinit var stringMessage : String
-
-    constructor(message: String) {
-        stringMessage = message
-    }
-
+class eventMessage(message: String) {
+    var stringMessage : String = message
 }
