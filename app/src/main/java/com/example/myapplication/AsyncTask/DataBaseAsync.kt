@@ -5,7 +5,7 @@ import android.os.AsyncTask
 import com.example.myapplication.UserDataBase
 import com.example.myapplication.netModel.User
 
-class dataBaseAsync(mUser: User) : AsyncTask<Context, Int, String>() {
+class DataBaseAsync(mUser: User) : AsyncTask<Context, Int, String>() {
 
     var user = mUser
 
@@ -18,8 +18,5 @@ class dataBaseAsync(mUser: User) : AsyncTask<Context, Int, String>() {
 
         return "success"
     }
-
-
-
 }
 

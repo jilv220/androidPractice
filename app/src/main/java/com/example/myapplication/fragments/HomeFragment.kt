@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.RetrofitActivity
 import com.example.myapplication.databinding.Fragment1Binding
-import com.example.myapplication.event.eventMessage
+import com.example.myapplication.event.EventMessage
 import com.example.myapplication.fragmentsViewModel.HomeFragmentViewModel
 import org.greenrobot.eventbus.EventBus
 
@@ -38,7 +38,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
 
             R.id.bt_generate_random -> {
-                EventBus.getDefault().post(eventMessage("HomeFragment generates a random number"))
+                EventBus.getDefault().post(EventMessage("HomeFragment generates a random number"))
                 viewModel.generateRandomNumber()
             }
 
@@ -46,6 +46,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 val intent = Intent()
                 intent.setClass(v.context, RetrofitActivity::class.java)
                 startActivity(intent)
+            }
+
+            R.id.bt_quick_sort -> {
+                viewModel.quickSort(viewModel.arrayToSort,0,viewModel.arrayToSort.size - 1)
+
+                for (i in viewModel.arrayToSort.indices) {
+                    Log.e("element in array is :" ,viewModel.arrayToSort[i].toString())
+                }
             }
 
         }

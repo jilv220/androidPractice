@@ -1,5 +1,5 @@
 package com.example.myapplication.event
 
-class eventMessage(message: String) {
+class EventMessage(message: String) {
     var stringMessage : String = message
 }

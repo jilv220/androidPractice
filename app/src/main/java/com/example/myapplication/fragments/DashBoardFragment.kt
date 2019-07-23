@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
-import com.example.myapplication.event.eventMessage
+import com.example.myapplication.event.EventMessage
 import kotlinx.android.synthetic.main.fragment_2.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -26,7 +26,7 @@ class DashBoardFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun oneventmessege(message : eventMessage) {
+    fun oneventmessege(message : EventMessage) {
 
         receiver.text = message.stringMessage
 

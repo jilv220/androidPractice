@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.myapplication.AsyncTask.dataBaseAsync
+import com.example.myapplication.AsyncTask.DataBaseAsync
 import com.example.myapplication.R
 import com.example.myapplication.databinding.Fragment4Binding
 import com.example.myapplication.netModel.User
@@ -29,7 +29,7 @@ class CalculationFragment : Fragment(), View.OnClickListener {
         user.age = 999
 
         Toast.makeText(context,"开始写入数据库", Toast.LENGTH_SHORT).show()
-        dataBaseAsync(user)
+        DataBaseAsync(user)
         Toast.makeText(context,"数据库写入完毕", Toast.LENGTH_SHORT).show()
 
     }
