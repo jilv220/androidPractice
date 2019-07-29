@@ -31,4 +31,8 @@ public abstract class UserDataBase extends RoomDatabase {
 
     public abstract UserDao getUserDao();
 
+    public String getUserName(int index) {
+        return instance.getUserDao().getAllUsers().get(index).getName();
+    }
+
 }
